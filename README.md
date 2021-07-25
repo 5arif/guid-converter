@@ -7,22 +7,32 @@
 Support Oracle Raw-16, Tibero Raw-16 format
 
 > Ctrl + Shift + P, Convert Guid
-<hr>
 
-### ChangeLog
+>![1.](/image/guid.png  'Guid Feature')
 <br>
 
-### 0.0.1
+>![2.](/image/convert.png 'Convert')
+<br>
 
-1. Initial Release
-<hr>
+>![3.](/image/raw.png 'Raw Feature')
 
-### 0.0.2
-1. Add Copied to clipboard 
-2. Add New Guid 
-3. Add Empty Guid 
-4. Add New Raw
-5. Add Empty Raw
+# Changelog
+
+## [0.0.1] - 2021-07-23
+### Added
+- Initial Release
+
+## [0.0.2] - 2021-07-25
+### Added
+- Add Copied to clipboard 
+- Add New Guid 
+- Add Empty Guid 
+- Add New Raw
+- Add Empty Raw
+
+### Changed
+- Uuid Validation
+
 <hr>
 
 ### Source Code
