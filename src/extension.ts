@@ -1,27 +1,24 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
+
 import * as vscode from 'vscode';
 import { NIL as NIL_UUID, v4 as uuidv4, validate as uuidValidate } from 'uuid';
 
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-	
+
 	let guidConvertCmd = vscode.commands.registerCommand('guidconverter.convert', async () => {
-	
+
 		let guidSource = await vscode.window.showInputBox({
 			ignoreFocusOut: true,
 			prompt: 'Input Raw/Guid',
 		}) ?? '';
 
-		let isGuid:boolean = uuidValidate(guidSource);
+		let isGuid: boolean = uuidValidate(guidSource);
 
 		try {
 			const convert = require('raw-guid-converter');
-			let converted:string = isGuid 
+			let converted: string = isGuid
 				? convert.convertString(guidSource)
 				: convert.convertRaw(guidSource);
-			
+
 			vscode.env.clipboard.writeText(converted);
 			vscode.window.showInformationMessage('Copied to clipboard :\n' + converted);
 		} catch (error) {
@@ -50,8 +47,8 @@ export function activate(context: vscode.ExtensionContext) {
 		try {
 			const convert = require('raw-guid-converter');
 			let newGuid = uuidv4();
-			let converted:string = convert.convertString(newGuid);
-			
+			let converted: string = convert.convertString(newGuid);
+
 			vscode.env.clipboard.writeText(converted);
 			vscode.window.showInformationMessage('Copied to clipboard :\n' + converted);
 		} catch (error) {
@@ -68,7 +65,69 @@ export function activate(context: vscode.ExtensionContext) {
 	});
 
 	context.subscriptions.push(emptyRawCmd);
+
+	let inlineConvertCmd = vscode.commands.registerCommand('guidconverter.inline_convert', async () => {
+		let editor = vscode.window.activeTextEditor;
+		if (!editor) {
+			return; 
+		}
+
+		let selection = editor.selection;
+		let guidSource = editor.document.getText(selection);
+		let isGuid: boolean = uuidValidate(guidSource);
+
+		try {
+			const convert = require('raw-guid-converter');
+			let converted: string = isGuid
+				? convert.convertString(guidSource)
+				: convert.convertRaw(guidSource);
+
+			editor.edit((editBuilder) => editBuilder.replace(selection, converted));
+		} catch (error) {
+			vscode.window.showErrorMessage('Error : ' + error);
+		}
+	});
+
+	context.subscriptions.push(inlineConvertCmd);
+
+	let inlineRawCmd = vscode.commands.registerCommand('guidconverter.inline_raw', async () => {
+		try {
+			let editor = vscode.window.activeTextEditor;
+			if (!editor) {
+				return; 
+			}
+
+			let selection = editor.selection;
+			const convert = require('raw-guid-converter');
+
+			let newGuid = uuidv4();
+			let converted: string = convert.convertString(newGuid);
+
+			editor.edit((editBuilder) => editBuilder.insert(selection.active, converted));
+		} catch (error) {
+			vscode.window.showErrorMessage('Error : ' + error);
+		}
+	});
+
+	context.subscriptions.push(inlineRawCmd);
+
+	let inlineGuidCmd = vscode.commands.registerCommand('guidconverter.inline_guid', async () => {
+		try {
+			var editor = vscode.window.activeTextEditor;
+			if (!editor) {
+				return; 
+			}
+
+			let selection = editor.selection;
+			let newGuid = uuidv4();
+
+			editor.edit((editBuilder) => editBuilder.insert(selection.active, newGuid));
+		} catch (error) {
+			vscode.window.showErrorMessage('Error : ' + error);
+		}
+	});
+
+	context.subscriptions.push(inlineGuidCmd);
 }
 
-// this method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() { }

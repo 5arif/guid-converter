@@ -8,7 +8,7 @@ All notable changes to the "guidconverter" extension
 
 ## [0.0.2] - 2021-07-25
 ### Added
-- Add Copied to clipboard 
+- Add Copy to clipboard 
 - Add New Guid 
 - Add Empty Guid 
 - Add New Raw
@@ -16,3 +16,9 @@ All notable changes to the "guidconverter" extension
 
 ### Changed
 - Uuid Validation
+
+## [0.0.3] - 2021-07-25
+### Added
+- Add Convert from context menu 
+- Add New Guid from context menu 
+- Add New Raw from context menu

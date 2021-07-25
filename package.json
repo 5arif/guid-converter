@@ -4,7 +4,7 @@
 	"description": "Guid Converter",
 	"icon": "image/icon.png",
 	"publisher": "SarifHidayat",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"repository": {
 		"url": "https://github.com/5arif/guid-converter"
 	},
@@ -19,7 +19,10 @@
 		"onCommand:guidconverter.new_guid",
 		"onCommand:guidconverter.empty_guid",
 		"onCommand:guidconverter.new_raw",
-		"onCommand:guidconverter.empty_raw"
+		"onCommand:guidconverter.empty_raw",
+		"onCommand:guidconverter.inline_convert",
+		"onCommand:guidconverter.inline_guid",
+		"onCommand:guidconverter.inline_raw"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
@@ -43,8 +46,50 @@
 			{
 				"command": "guidconverter.empty_raw",
 				"title": "Empty Raw"
+			},
+			{
+				"command": "guidconverter.inline_convert",
+				"title": "Convert Guid/Raw"
+			},
+			{
+				"command": "guidconverter.inline_guid",
+				"title": "New Guid"
+			},
+			{
+				"command": "guidconverter.inline_raw",
+				"title": "New Raw"
 			}
-		]
+		],
+		"menus": {
+			"commandPalette": [
+				{
+					"when": "false",
+					"command": "guidconverter.inline_convert"
+				},
+				{
+					"when": "false",
+					"command": "guidconverter.inline_guid"
+				},
+				{
+					"when": "false",
+					"command": "guidconverter.inline_raw"
+				}
+			],
+			"editor/context": [
+				{
+					"when": "editorHasSelection",
+					"command": "guidconverter.inline_convert"
+				},
+				{
+					"when": "editorFocus",
+					"command": "guidconverter.inline_guid"
+				},
+				{
+					"when": "editorFocus",
+					"command": "guidconverter.inline_raw"
+				}
+			]
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run package",
