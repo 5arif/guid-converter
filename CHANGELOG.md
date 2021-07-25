@@ -1,9 +1,18 @@
 # Change Log
 
-All notable changes to the "guidconverter" extension will be documented in this file.
+All notable changes to the "guidconverter" extension 
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+## [0.0.1] - 2021-07-23
+### Added
+- Initial Release
 
-## [Unreleased]
+## [0.0.2] - 2021-07-25
+### Added
+- Add Copied to clipboard 
+- Add New Guid 
+- Add Empty Guid 
+- Add New Raw
+- Add Empty Raw
 
-- Initial release
+### Changed
+- Uuid Validation
