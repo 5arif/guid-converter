@@ -1,6 +1,7 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import { NIL as NIL_UUID, v4 as uuidv4, validate as uuidValidate } from 'uuid';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -13,8 +14,7 @@ export function activate(context: vscode.ExtensionContext) {
 			prompt: 'Input Raw/Guid',
 		}) ?? '';
 
-		let validator = require('validator');
-		let isGuid:boolean = validator.isUUID(guidSource);
+		let isGuid:boolean = uuidValidate(guidSource);
 
 		try {
 			const convert = require('raw-guid-converter');
@@ -22,13 +22,52 @@ export function activate(context: vscode.ExtensionContext) {
 				? convert.convertString(guidSource)
 				: convert.convertRaw(guidSource);
 			
-			vscode.window.showInformationMessage(converted);
+			vscode.env.clipboard.writeText(converted);
+			vscode.window.showInformationMessage('Copied to clipboard :\n' + converted);
 		} catch (error) {
 			vscode.window.showErrorMessage('Error : ' + error);
 		}
 	});
 
 	context.subscriptions.push(guidConvertCmd);
+
+	let emptyguidCmd = vscode.commands.registerCommand('guidconverter.empty_guid', async () => {
+		vscode.env.clipboard.writeText(NIL_UUID);
+		vscode.window.showInformationMessage('Copied to clipboard :\n' + NIL_UUID);
+	});
+
+	context.subscriptions.push(emptyguidCmd);
+
+	let newGuidCmd = vscode.commands.registerCommand('guidconverter.new_guid', async () => {
+		let newGuid = uuidv4();
+		vscode.env.clipboard.writeText(newGuid);
+		vscode.window.showInformationMessage('Copied to clipboard :\n' + newGuid);
+	});
+
+	context.subscriptions.push(newGuidCmd);
+
+	let newRawCmd = vscode.commands.registerCommand('guidconverter.new_raw', async () => {
+		try {
+			const convert = require('raw-guid-converter');
+			let newGuid = uuidv4();
+			let converted:string = convert.convertString(newGuid);
+			
+			vscode.env.clipboard.writeText(converted);
+			vscode.window.showInformationMessage('Copied to clipboard :\n' + converted);
+		} catch (error) {
+			vscode.window.showErrorMessage('Error : ' + error);
+		}
+	});
+
+	context.subscriptions.push(newRawCmd);
+
+	let emptyRawCmd = vscode.commands.registerCommand('guidconverter.empty_raw', async () => {
+		let emptyRaw = '00000000000000000000000000000000';
+		vscode.env.clipboard.writeText(emptyRaw);
+		vscode.window.showInformationMessage('Copied to clipboard :\n' + emptyRaw);
+	});
+
+	context.subscriptions.push(emptyRawCmd);
 }
 
 // this method is called when your extension is deactivated

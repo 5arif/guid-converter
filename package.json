@@ -4,7 +4,7 @@
 	"description": "Guid Converter",
 	"icon": "image/icon.png",
 	"publisher": "SarifHidayat",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"repository": {
 		"url": "https://github.com/5arif/guid-converter"
 	},
@@ -15,7 +15,11 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:guidconverter.convert"
+		"onCommand:guidconverter.convert",
+		"onCommand:guidconverter.new_guid",
+		"onCommand:guidconverter.empty_guid",
+		"onCommand:guidconverter.new_raw",
+		"onCommand:guidconverter.empty_raw"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
@@ -23,6 +27,22 @@
 			{
 				"command": "guidconverter.convert",
 				"title": "Convert Guid"
+			},
+			{
+				"command": "guidconverter.new_guid",
+				"title": "New Guid"
+			},
+			{
+				"command": "guidconverter.empty_guid",
+				"title": "Empty Guid"
+			},
+			{
+				"command": "guidconverter.new_raw",
+				"title": "New Raw"
+			},
+			{
+				"command": "guidconverter.empty_raw",
+				"title": "Empty Raw"
 			}
 		]
 	},
@@ -35,26 +55,28 @@
 		"test-watch": "tsc -watch -p ./",
 		"pretest": "npm run test-compile && npm run lint",
 		"lint": "eslint src --ext ts",
-		"test": "node ./out/test/runTest.js"
+		"test": "node ./out/test/runTest.js",
+		"publish": "vsce package"
 	},
 	"devDependencies": {
-		"@types/vscode": "^1.58.0",
 		"@types/glob": "^7.1.3",
 		"@types/mocha": "^8.2.2",
 		"@types/node": "14.x",
-		"eslint": "^7.27.0",
+		"@types/uuid": "^8.3.1",
+		"@types/vscode": "^1.58.0",
 		"@typescript-eslint/eslint-plugin": "^4.26.0",
 		"@typescript-eslint/parser": "^4.26.0",
+		"eslint": "^7.27.0",
 		"glob": "^7.1.7",
 		"mocha": "^8.4.0",
+		"ts-loader": "^9.2.2",
 		"typescript": "^4.3.2",
 		"vscode-test": "^1.5.2",
-		"ts-loader": "^9.2.2",
 		"webpack": "^5.38.1",
 		"webpack-cli": "^4.7.0"
 	},
 	"dependencies": {
 		"raw-guid-converter": "^1.0.130",
-		"validator": "^13.6.0"
+		"uuid": "^8.3.2"
 	}
 }
